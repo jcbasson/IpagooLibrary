@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div id="alert-modals">
+        <div id="successModal" data-dismiss="modal" class="modal alert-modal fade alert alert-success">
+            <a class="close" data-dismiss="modal" aria-label="close">×</a>
+            <strong class="alert-title float-left">Success</strong>
+            <p class="alert-message">Indicates a successful or positive action.</p>
+        </div>
+        <div id="infoModal" data-dismiss="modal" class="modal alert-modal fade alert alert-info">
+            <a class="close" data-dismiss="modal" aria-label="close">×</a>
+            <strong class="alert-title float-left">Info</strong>
+            <p class="alert-message">This alert box could indicate a neutral informative change or action.</p>
+        </div>
+        <div id="warningModal" data-dismiss="modal" class="modal alert-modal fade alert alert-warning">
+            <a class="close" data-dismiss="modal" aria-label="close">×</a>
+            <strong class="alert-title float-left">Warning</strong>
+            <p class="alert-message">This alert box could indicate a warning that might need attention.</p>
+        </div>
+        <div id="dangerModal" data-dismiss="modal" class="modal alert-modal fade alert alert-danger">
+            <a class="close" data-dismiss="modal" aria-label="close">×</a>
+            <strong class="alert-title float-left">Error</strong>
+            <p class="alert-message">This alert box could indicate a dangerous or potentially negative action.</p>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("IPAGOO LIBRARY!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Library", "Index", "Home")</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - By The People! For The People!</p>
+        </footer>
+    </div>
+</body>
+</html>

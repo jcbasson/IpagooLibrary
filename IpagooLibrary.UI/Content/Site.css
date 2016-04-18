@@ -1,0 +1,128 @@
+﻿* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+label {
+    padding: 5px !important;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.row {
+    min-height: 50px;
+}
+
+.block {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 5px 5px 5px 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.2);
+}
+
+.alert-title {
+    width: 4%;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-none {
+    float: none;
+}
+
+.alert-modal {
+    height: 6%;
+    overflow: hidden;
+}
+
+#alert-modals * {
+    cursor: pointer;
+}
+
+.response-type-container {
+    padding-top: 10px;
+}
+
+.response-type-label {
+    margin-top: 5px;
+}
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.heading-container {
+    margin-bottom: 20px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.wrap-text {
+    word-wrap: break-word;
+}
+
+.pagination li a{
+    cursor: pointer;
+}
+
+.navbar-form a {
+    cursor: pointer;
+}
+
+.filterbutton-container a{
+    padding-top: 5px;
+    cursor:pointer;
+}
+

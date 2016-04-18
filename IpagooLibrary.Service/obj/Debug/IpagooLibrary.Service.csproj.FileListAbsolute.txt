@@ -1,0 +1,11 @@
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\obj\Debug\IpagooLibrary.Service.csprojResolveAssemblyReference.cache
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Service.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Service.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Models.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Repository.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\Newtonsoft.Json.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Models.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\IpagooLibrary.Repository.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\bin\Debug\Newtonsoft.Json.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\obj\Debug\IpagooLibrary.Service.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Service\obj\Debug\IpagooLibrary.Service.pdb

@@ -1,0 +1,14 @@
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibrary.Service.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibrary.Service.pdb
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibary.Repository.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibrary.Models.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\EntityFramework.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibary.Repository.pdb
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibrary.Models.pdb
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\EntityFramework.xml
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\obj\Debug\Ipagoo.ExpressLibrary.Service.csprojResolveAssemblyReference.cache
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\obj\Debug\Ipagoo.ExpressLibrary.Service.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\obj\Debug\Ipagoo.ExpressLibrary.Service.pdb
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Newtonsoft.Json.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Newtonsoft.Json.xml
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Service\bin\Debug\Ipagoo.ExpressLibrary.Service.dll.config

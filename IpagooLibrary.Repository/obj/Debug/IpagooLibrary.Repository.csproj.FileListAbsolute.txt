@@ -1,0 +1,12 @@
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\obj\Debug\IpagooLibrary.Repository.csprojResolveAssemblyReference.cache
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\IpagooLibrary.Repository.dll.config
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\IpagooLibrary.Repository.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\IpagooLibrary.Repository.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\EntityFramework.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\IpagooLibrary.Models.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\IpagooLibrary.Models.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\EntityFramework.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\obj\Debug\IpagooLibrary.Repository.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Repository\obj\Debug\IpagooLibrary.Repository.pdb

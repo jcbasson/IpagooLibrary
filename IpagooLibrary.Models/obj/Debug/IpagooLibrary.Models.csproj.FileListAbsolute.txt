@@ -1,0 +1,5 @@
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Models\bin\Debug\IpagooLibrary.Models.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Models\bin\Debug\IpagooLibrary.Models.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Models\obj\Debug\IpagooLibrary.Models.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Models\obj\Debug\IpagooLibrary.Models.pdb
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.Models\obj\Debug\IpagooLibrary.Models.csprojResolveAssemblyReference.cache
