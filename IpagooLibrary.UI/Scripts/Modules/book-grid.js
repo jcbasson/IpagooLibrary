@@ -1,6 +1,6 @@
 ﻿define(["Config/book-RequestConfig", "Store/books-store"],
 function (iRequestConfig, iBookStore) {
-    var peopleGridModule = function (sandbox) {
+    var bookGridModule = function (sandbox) {
         var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook;
 
         return {
@@ -10,7 +10,6 @@ function (iRequestConfig, iBookStore) {
                 bookGridContainer = sandbox.find("#book-grid-container")[0];
                 bookGridTemplate = sandbox.find("#book-grid-template")[0];
                 
-                //thisModule.initializeBookGrid();
                 sandbox.listen({
                     'init-book-grid': thisModule.initializeBookGrid,
                     'empty-book-grid': thisModule.emptyBookGrid
@@ -21,13 +20,13 @@ function (iRequestConfig, iBookStore) {
 
             },
             initializeBookGrid: function () {
-                debugger;
+              
                 var bookGetUrl = iRequestConfig.getBookGetEndpoint();
 
                 var bookRequest = sandbox.httpGet(bookGetUrl);
 
                 bookRequest.done(function (response) {
-
+                    console.log(response);
                     if (response) {
 
                         iBookStore.setCurrentBook(response.Books);
@@ -68,13 +67,13 @@ function (iRequestConfig, iBookStore) {
 
                     var generatedHtml = template(jsonBooks);
                     sandbox.replaceContent(bookGridContainer, generatedHtml);
-                    thisModule.initializeClickEvents();
+                    thisModule.initializeBorrowClickEvents();
 
                 } else {
                     sandbox.replaceContent(bookGridContainer, "<p>No books were found</p>");
                 }
             },
-            initializeClickEvents: function () {
+            initializeBorrowClickEvents: function () {
                 var btnBorrowBook;
                 allbtnBorrowBook = sandbox.find(".btnBorrowBook");
                 var count = 0;
@@ -90,7 +89,7 @@ function (iRequestConfig, iBookStore) {
                     }
                 }
             },
-            destroyClickEvents: function () {
+            destroyBorrowClickEvents: function () {
 
                 if (allbtnBorrowBook && allbtnBorrowBook.length > 0) {
                     var count = 0;
@@ -104,35 +103,21 @@ function (iRequestConfig, iBookStore) {
             initializeBorrowBookForm: function (e) {
 
                 var count = 0;
-                var clickedEditPersonButton = e.currentTarget;
-     
+                var clickedBorrowButton = e.currentTarget;
 
-            },
-            denitializeInlineEditing: function (personId) {
 
-                var count = 0;
-                var personRow = sandbox.find("#tr" + personId)[0];
+                var isbn = sandbox.getAttr(clickedBorrowButton, "data-isbn");
+                var lenderId = sandbox.getAttr(clickedBorrowButton, "data-lenderId");
 
-                var personRowColumns = personRow.children;
-
-                for (; count < personRowColumns.length; count++) {
-                    debugger;
-                    var personColumn = personRowColumns[count];
-
-                    var columnFor = sandbox.getAttr(personColumn, "data-for");
-                                        
-                    if (columnFor) {
-
-                        var txtBoxForColumn = sandbox.find("#txt" + columnFor + "-" + personId)[0];
-
-                        var txtBoxValue = txtBoxForColumn.value;
-                        sandbox.removeAttr(personColumn, "data-val");
-                        sandbox.addAttr(personColumn, { "data-val": txtBoxValue });
-
-                        sandbox.replaceContent(personColumn, txtBoxValue);
+                sandbox.notify({
+                    type: "init-lendbook-form",
+                    data: {
+                        ISBN: isbn,
+                        LenderID: lenderId
                     }
-                }
+                });  
             },
+        
             borrowBook: function (e) {
                 var clickedborrowBookButton = e.currentTarget;
                 var bookISBN = sandbox.getAttr(clickedborrowBookButton, "data-isbn");
@@ -220,5 +205,5 @@ function (iRequestConfig, iBookStore) {
 
         }
     }
-    return peopleGridModule;
+    return bookGridModule;
 });

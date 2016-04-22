@@ -39,7 +39,7 @@
     <div class="filterbutton-container row">
         <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-1 col-md-1 col-sm-1">
             <button id="btnSearchBooks" type="submit" class="btn btn-primary">Find</button>
-            
+
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3">
             <a id="btnClearSearchBooks">Clear</a>
@@ -55,7 +55,6 @@
                 <th>Author</th>
                 <th>Genre</th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody id="book-grid-container"></tbody>
@@ -67,12 +66,33 @@
             <td data-for="Title" data-val="{{Title}}">{{Title}}</td>
             <td data-for="Author" data-val="{{AuthorName}}">{{AuthorName}}</td>
             <td data-for="Genre" data-val="{{Genre}}">{{Genre}}</td>
-            @*<td data-for="Genre" class="visible-{{IsOut}}">Out of stock</td>
-                <td class="invisible-{{IsOut}}"><input type="button" id="btnBorrow{{ISBN}}" class="btnBorrowBook hide" data-isbn="{{ISBN}}" value="BORROW" /></td>*@
-
+            <td>
+                <input type="button" class="btnBorrowBook btn btn-primary invisible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="BORROW" />
+                <input type="button" class="btnReturnBook btn btn-info visible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="RETURN" />
+            </td>
         </tr>
         {{/each}}
     </script>
+</div>
+<div id="book-lenderform">
+    <div id="book-lenderform-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 @*<div id="book-paging" class="row">
         <div id="book-pager-container" class="col-lg-12 col-md-12 col-sm-12">

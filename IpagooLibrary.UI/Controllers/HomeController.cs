@@ -1,9 +1,8 @@
-﻿using IpagooLibrary.Models.DTO;
+﻿using AutoMapper;
+using IpagooLibrary.Models.DTO;
 using IpagooLibrary.Service.Interfaces;
-using System;
-using System.Collections.Generic;
+using IpagooLibrary.UI.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace IpagooLibrary.UI.Controllers
@@ -12,9 +11,12 @@ namespace IpagooLibrary.UI.Controllers
     {
         private readonly IBookService _iBookService;
 
-        public HomeController(IBookService iBookService)
+        private readonly IMapper _mapper;
+
+        public HomeController(IBookService iBookService, IMapper mapper)
         {
             _iBookService = iBookService;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
@@ -23,11 +25,24 @@ namespace IpagooLibrary.UI.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetBooks(BookFilter bookFilter)
+        public JsonResult GetBooks(BookSearch bookSearch)
         {
-            var books = _iBookService.FilterBooks(bookFilter);
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    Errors = ModelState.Values.SelectMany(v => v.Errors)
+                }, JsonRequestBehavior.AllowGet);
+            }
+            var bookFilter = _mapper.Map<BookSearch, BookFilter>(bookSearch);
+            if (bookFilter == null) return new JsonResult() { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-            return new JsonResult() { Data = books, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var libaryDto = _iBookService.FilterBooks(bookFilter);
+            if (libaryDto == null) return new JsonResult() { Data = null, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            var libaryViewModel = _mapper.Map<LibraryDTO, LibraryViewModel>(libaryDto);
+
+            return new JsonResult() { Data = libaryViewModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [HttpPost]

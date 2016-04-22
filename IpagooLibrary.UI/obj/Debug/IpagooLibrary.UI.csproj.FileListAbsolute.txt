@@ -77,3 +77,5 @@ C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\IpagooLibrary.Repository.p
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\IpagooLibrary.Service.pdb
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.xml
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.Integration.Mvc.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\AutoMapper.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\AutoMapper.xml

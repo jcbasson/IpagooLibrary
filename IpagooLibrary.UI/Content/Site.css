@@ -37,11 +37,11 @@ label {
     width: 4%;
 }
 
-.hide {
+.hide, .invisible-true ,.visible-false {
     display: none;
 }
 
-.show {
+.show , .invisible-false ,.visible-true{
     display: block;
 }
 

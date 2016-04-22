@@ -24,33 +24,38 @@ function (iRequestConfig) {
                 sandbox.removeEvent(btnSearchByName, "click", thisModule.findByBook);
                 sandbox.removeEvent(btnClearSearchBooks, "click", thisModule.clearSearchFilters);
             },
-            findByBook: function () {
+            findByBook: function () {              
 
-                var isbn = txtSearchByISBN.value;
-                var title = txtSearchByTitle.value;
-                var author = txtSearchByAuthor.value;
-                var genre = ddlSearchByGenre.value;
+                if (thisModule.validateInput(txtSearchByISBN)
+                    || thisModule.validateInput(txtSearchByTitle)
+                    || thisModule.validateInput(txtSearchByAuthor)
+                    || thisModule.validateInput(ddlSearchByGenre)) {
 
-                iRequestConfig.updateISBNFilter(isbn);
-                iRequestConfig.updateTitleFilter(title);
-                iRequestConfig.updateAuthorFilter(author);
-                iRequestConfig.updateGenreFilter(genre);
-                iRequestConfig.updateOffset(0);
+                    var isbn = txtSearchByISBN.value;
+                    var title = txtSearchByTitle.value;
+                    var author = txtSearchByAuthor.value;
+                    var genre = ddlSearchByGenre.value;
 
-                //Reload Grid
-                sandbox.notify({
-                    type: "init-book-grid"
-                });
+                    iRequestConfig.updateISBNFilter(isbn);
+                    iRequestConfig.updateTitleFilter(title);
+                    iRequestConfig.updateAuthorFilter(author);
+                    iRequestConfig.updateGenreFilter(genre);
+                    iRequestConfig.updateOffset(0);
 
-                //sandbox.notify({
-                //    type: "set-mustloadpager-status",
-                //    data: "true"
-                //})
-
-              
+                    thisModule.clearValidationNotices();
+                    //Reload Grid
+                    sandbox.notify({
+                        type: "init-book-grid"
+                    });
+                }
+                else {
+                    sandbox.notify({
+                        type: "empty-book-grid"
+                    });
+                }
             },
-            validateInput: function (value, inputControl) {
-                if (!value) {
+            validateInput: function (inputControl) {
+                if (!inputControl.value) {
                     sandbox.addClass(inputControl, "alert-danger");
                     return false;
                 } else {
@@ -70,9 +75,17 @@ function (iRequestConfig) {
                 iRequestConfig.updateAuthorFilter("");
                 iRequestConfig.updateGenreFilter("");
 
+                thisModule.clearValidationNotices();
+
                 sandbox.notify({
-                    type: "init-people-grid"
+                    type: "empty-book-grid"
                 });
+            },
+            clearValidationNotices: function () {
+                sandbox.removeClass(txtSearchByISBN, "alert-danger");
+                sandbox.removeClass(txtSearchByTitle, "alert-danger");
+                sandbox.removeClass(txtSearchByAuthor, "alert-danger");
+                sandbox.removeClass(ddlSearchByGenre, "alert-danger");
             }
         }
     }

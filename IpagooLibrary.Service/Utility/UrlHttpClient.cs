@@ -1,10 +1,9 @@
 ﻿using IpagooLibrary.Models.DTO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System;
+using Creator.DirectBooking.Api.Service.Utility.Interfaces;
 
 namespace Creator.DirectBooking.Api.Service.Utility
 {

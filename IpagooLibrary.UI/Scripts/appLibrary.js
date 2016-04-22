@@ -20,14 +20,14 @@
 });
 
 // Start the main app logic.
-requirejs(["Core/core-jquery", "Modules/book-grid", "Modules/book-searchbox","SharedModules/alert-modals"],
-function (icore, iBookGrid, iBookSearchbox, iAlertModals) {
+requirejs(["Core/core-jquery", "Modules/book-grid", "Modules/book-searchbox", "Modules/book-lender", "SharedModules/alert-modals"],
+function (icore, iBookGrid, iBookSearchbox,iBookLenderForm, iAlertModals) {
 
     debugger;
     icore.register("alert-modals", iAlertModals);
     icore.register("book-grid", iBookGrid);
     icore.register("book-searchbox", iBookSearchbox);
-    //icore.register("book-paging", iBookPaging)
+    icore.register("book-lenderform", iBookLenderForm)
 
     icore.start_all();
 

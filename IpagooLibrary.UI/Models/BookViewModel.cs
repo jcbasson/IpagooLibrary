@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace IpagooLibrary.Models.DTO
+namespace IpagooLibrary.UI.Models
 {
-    public class BookDTO
+    public class BookViewModel
     {
         public int ID { get; set; }
         public string ISBN { get; set; }
@@ -14,5 +13,10 @@ namespace IpagooLibrary.Models.DTO
         public string AuthorName { get; set; }
         public string Genre { get; set; }
         public int LenderID { get; set; }
+        public bool IsOut {
+            get{
+                return LenderID > 0; 
+            }
+        }
     }
 }

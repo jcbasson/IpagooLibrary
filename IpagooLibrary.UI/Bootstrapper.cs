@@ -1,11 +1,14 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
 using Creator.DirectBooking.Api.Service.Utility;
+using Creator.DirectBooking.Api.Service.Utility.Interfaces;
 using IpagooLibrary.Repository;
 using IpagooLibrary.Repository.Infrastructure;
 using IpagooLibrary.Repository.Infrastructure.Interfaces;
 using IpagooLibrary.Repository.Respositories;
 using IpagooLibrary.Service.Services;
+using IpagooLibrary.UI.App_Start;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -40,7 +43,11 @@ namespace IpagooLibrary.UI
             builder.RegisterAssemblyTypes(typeof(BookService)
              .Assembly).Where(t => t.Name.EndsWith("Service"))
              .AsImplementedInterfaces().InstancePerLifetimeScope();
-            
+
+            MappingProfile mappingProfile = new MappingProfile();
+            var mapper = mappingProfile.GenerateMapper();
+            builder.RegisterInstance(mapper).As<IMapper>();
+
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

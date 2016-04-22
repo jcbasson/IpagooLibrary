@@ -23,7 +23,9 @@ namespace IpagooLibrary.Repository.Extensions
                             ISBN = reader["ISBN"] != null ? (string)reader["ISBN"] : string.Empty,
                             Title = reader["Title"] != null ? (string)reader["Title"] : string.Empty,
                             AuthorName = reader["AuthorName"] != null ? (string)reader["AuthorName"] : string.Empty,
-                            Genre = reader["Genre"] != null ? (string)reader["Genre"] : string.Empty
+                            Genre = reader["Genre"] != null ? (string)reader["Genre"] : string.Empty,
+                            LenderID = reader["LenderID"] != null ? int.Parse(reader["LenderID"].ToString()) : -1,
+
                         });
                     }
                     catch (Exception ex)
