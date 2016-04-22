@@ -31,6 +31,7 @@
                     <option value="Comedy">Comedy</option>
                     <option value="Action">Action</option>
                     <option value="Horror">Horror</option>
+                    <option value="Thriller">Thriller</option>
                 </select>
             </div>
         </div>
@@ -64,7 +65,7 @@
         <tr id="tr{{ISBN}}">
             <td data-for="ISBN" data-val="{{ISBN}}">{{ISBN}}</td>
             <td data-for="Title" data-val="{{Title}}">{{Title}}</td>
-            <td data-for="Author" data-val="{{Author}}">{{Author}}</td>
+            <td data-for="Author" data-val="{{AuthorName}}">{{AuthorName}}</td>
             <td data-for="Genre" data-val="{{Genre}}">{{Genre}}</td>
             @*<td data-for="Genre" class="visible-{{IsOut}}">Out of stock</td>
                 <td class="invisible-{{IsOut}}"><input type="button" id="btnBorrow{{ISBN}}" class="btnBorrowBook hide" data-isbn="{{ISBN}}" value="BORROW" /></td>*@

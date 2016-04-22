@@ -29,13 +29,14 @@ namespace IpagooLibrary.Repository.Extensions
                     catch (Exception ex)
                     {
                         //TODO lOG details of the record that failed to read and the exception
+                        return null;
                     }
                 }
 
                 var libraryDTO = new LibraryDTO
                 {
                     Books = books,
-                    TotalBooks = 1
+                    TotalBooks = books.Count
                 };
                 return libraryDTO;
             }

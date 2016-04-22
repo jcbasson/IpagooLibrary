@@ -27,9 +27,9 @@ namespace Ipagoo.ExpressLibrary.Service.Services
             {
                 IList<Book> books = new List<Book>();
                 ExpressLibraryResponse expressLibraryResponse = new ExpressLibraryResponse();
-                
-                if(bookFilter == null || 
-                    (string.IsNullOrEmpty(bookFilter.ISBN) && string.IsNullOrEmpty(bookFilter.Title) 
+
+                if (bookFilter == null ||
+                    (string.IsNullOrEmpty(bookFilter.ISBN) && string.IsNullOrEmpty(bookFilter.Title)
                     && string.IsNullOrEmpty(bookFilter.AuthorName) && string.IsNullOrEmpty(bookFilter.Genre)))
                 {
                     books = _bookRepository.GetAll();
@@ -43,7 +43,7 @@ namespace Ipagoo.ExpressLibrary.Service.Services
                     books = _bookRepository.GetMany(lambdaQuery);
                     if (books == null) return null;
                 }
-  
+
                 expressLibraryResponse.Books = books;
 
                 return expressLibraryResponse;
@@ -60,30 +60,37 @@ namespace Ipagoo.ExpressLibrary.Service.Services
             try
             {
                 ParameterExpression argumentParam = Expression.Parameter(typeof(Book), "books");
-
-                Expression propertyISBN = Expression.Property(argumentParam, "ISBN");
-                Expression propertyTitle = Expression.Property(argumentParam, "Title");
-                Expression propertyAuthorName = Expression.Property(argumentParam, "AuthorName");
-                Expression propertyGenre = Expression.Property(argumentParam, "Genre");
-
                 MethodInfo startsWithMethod = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
 
-                var valISBN = Expression.Constant(bookFilter.ISBN, typeof(string));
-                var valAuthorName = Expression.Constant(bookFilter.AuthorName, typeof(string));
-                var valTitle = Expression.Constant(bookFilter.Title, typeof(string));
-                var valGenre = Expression.Constant(bookFilter.Genre, typeof(string));
+                Expression finalOrExp;
 
-                var startsWithExpISBN = Expression.Call(propertyISBN, startsWithMethod, valISBN);
-                var startsWithExpTitle = Expression.Call(propertyISBN, startsWithMethod, valAuthorName);
-                var startsWithExpAuthorName = Expression.Call(propertyISBN, startsWithMethod, valTitle);
-                var startsWithExpGenre = Expression.Call(propertyISBN, startsWithMethod, valGenre);
+                //If we have ISBN number no need to search with rest of the parameters
+                if (!string.IsNullOrWhiteSpace(bookFilter.ISBN))
+                {
+                    Expression propertyISBN = Expression.Property(argumentParam, "ISBN");
+                    var valISBN = Expression.Constant(bookFilter.ISBN, typeof(string));
+                    finalOrExp = Expression.Call(propertyISBN, startsWithMethod, valISBN);
+                }
+                else
+                {
+                    Expression propertyTitle = Expression.Property(argumentParam, "Title");
+                    Expression propertyAuthorName = Expression.Property(argumentParam, "AuthorName");
+                    Expression propertyGenre = Expression.Property(argumentParam, "Genre");
 
-                Expression firsOrExp = Expression.OrElse(startsWithExpISBN, startsWithExpTitle);
-                Expression secondOrExp = Expression.OrElse(firsOrExp, startsWithExpAuthorName);
-                Expression finalOrExp = Expression.OrElse(secondOrExp, startsWithExpGenre);
+                    var valAuthorName = Expression.Constant(bookFilter.AuthorName, typeof(string));
+                    var valTitle = Expression.Constant(bookFilter.Title, typeof(string));
+                    var valGenre = Expression.Constant(bookFilter.Genre, typeof(string));
 
 
-                var lambdaQuery = Expression.Lambda<Func<Book, bool>>(argumentParam, argumentParam);
+                    var startsWithExpTitle = Expression.Call(propertyAuthorName, startsWithMethod, valAuthorName);
+                    var startsWithExpAuthorName = Expression.Call(propertyTitle, startsWithMethod, valTitle);
+                    var startsWithExpGenre = Expression.Call(propertyGenre, startsWithMethod, valGenre);
+                    
+                    Expression firstOrExp = Expression.OrElse(startsWithExpTitle, startsWithExpAuthorName);
+                    finalOrExp = Expression.OrElse(firstOrExp, startsWithExpGenre);
+                }
+
+                var lambdaQuery = Expression.Lambda<Func<Book, bool>>(finalOrExp, argumentParam);
 
                 return lambdaQuery;
             }

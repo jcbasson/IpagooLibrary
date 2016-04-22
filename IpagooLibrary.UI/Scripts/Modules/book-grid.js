@@ -9,8 +9,8 @@ function (iRequestConfig, iBookStore) {
 
                 bookGridContainer = sandbox.find("#book-grid-container")[0];
                 bookGridTemplate = sandbox.find("#book-grid-template")[0];
-                debugger;
-                thisModule.initializeBookGrid();
+                
+                //thisModule.initializeBookGrid();
                 sandbox.listen({
                     'init-book-grid': thisModule.initializeBookGrid,
                     'empty-book-grid': thisModule.emptyBookGrid
@@ -71,7 +71,7 @@ function (iRequestConfig, iBookStore) {
                     thisModule.initializeClickEvents();
 
                 } else {
-                    sandbox.replaceContent(bookGridContainer, "<p>No people were found</p>");
+                    sandbox.replaceContent(bookGridContainer, "<p>No books were found</p>");
                 }
             },
             initializeClickEvents: function () {

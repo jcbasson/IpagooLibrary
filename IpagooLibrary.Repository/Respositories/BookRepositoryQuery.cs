@@ -11,7 +11,7 @@ namespace IpagooLibrary.Repository.Respositories
         {
             try
             {
-                command.CommandText = @"exec [dbo].[GetBooks]  @ISBN,@Title,@Genre,@Author";//,@Offset,@Limit";
+                command.CommandText = @"exec [dbo].[GetBooks]  @ISBN,@Title,@Author";//,@Offset,@Limit";
 
                 var parameter = command.CreateParameter();
 
@@ -19,12 +19,14 @@ namespace IpagooLibrary.Repository.Respositories
                 parameter.Value = bookFilter.ISBN == null ? string.Empty : bookFilter.ISBN;
                 command.Parameters.Add(parameter);
 
+                parameter = command.CreateParameter();
                 parameter.ParameterName = "@Title";
-                parameter.Value = bookFilter.ISBN == null ? string.Empty : bookFilter.Title;
+                parameter.Value = bookFilter.Title == null ? string.Empty : bookFilter.Title;
                 command.Parameters.Add(parameter);
 
+                parameter = command.CreateParameter();
                 parameter.ParameterName = "@Author";
-                parameter.Value = bookFilter.ISBN == null ? string.Empty : bookFilter.AuthorName;
+                parameter.Value = bookFilter.AuthorName == null ? string.Empty : bookFilter.AuthorName;
                 command.Parameters.Add(parameter);
 
                 //parameter = command.CreateParameter();

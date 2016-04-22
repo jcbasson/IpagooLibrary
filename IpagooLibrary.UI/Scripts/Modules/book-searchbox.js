@@ -59,7 +59,7 @@ function (iRequestConfig) {
                 }
             },
             clearSearchFilters: function () {
-
+                //START HERE
                 txtSearchByISBN.value = "";
                 txtSearchByTitle.value = "";
                 txtSearchByAuthor.value = "";
