@@ -19,6 +19,7 @@ function (iRequestConfig) {
 
                 sandbox.addEvent(btnSearchBooks, "click", thisModule.findByBook);
                 sandbox.addEvent(btnClearSearchBooks, "click", thisModule.clearSearchFilters);
+
             },
             destroy: function () {
                 sandbox.removeEvent(btnSearchByName, "click", thisModule.findByBook);

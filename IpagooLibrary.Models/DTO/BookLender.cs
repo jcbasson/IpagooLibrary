@@ -10,7 +10,7 @@ namespace IpagooLibrary.Models.DTO
     {
         public string FriendName { get; set; }
         public string BookISBN { get; set; }
-        public DateTime LendStart { get; set; }
+        public string BorrowDate { get; set; }
         public string Comments { get; set; }
     }
 }

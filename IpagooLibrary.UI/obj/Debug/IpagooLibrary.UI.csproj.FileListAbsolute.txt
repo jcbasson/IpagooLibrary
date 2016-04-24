@@ -79,3 +79,7 @@ C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.xml
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.Integration.Mvc.xml
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\AutoMapper.dll
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\AutoMapper.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

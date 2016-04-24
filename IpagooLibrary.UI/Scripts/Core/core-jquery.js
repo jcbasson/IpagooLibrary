@@ -1,14 +1,14 @@
-﻿define(["jquery", "handlebarsBase", "Core/core-config", "Service/ajax-service", "Service/error-service", "Sandbox/sandbox", "bootstrap", "bootstrap-datepicker"],
+﻿define(["jquery", "handlebarsBase", "Core/core-config", "Service/ajax-service", "Service/error-service", "Sandbox/sandbox", "bootstrap", "bootstrap-datepicker", "signalR"],
 function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandbox) {
 
-    var moduleData = {};
-    var appConfig = {};
-    var filterUtitlity = {};
-    var thatCore;
+    var moduleData = {}, appConfig = {}, filterUtitlity = {}, thatCore;
+
     return {
         start_all: function () {
 
             if (iJquery && iHandlebars && iCoreConfig && iAjaxService && iSandbox) {
+
+                connection = iJquery.hubConnection();
 
                 appConfig = iCoreConfig();
                
@@ -27,7 +27,7 @@ function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandb
 
             var mod = moduleData[moduleId];
             if (mod) {
-                mod.instance = mod.create(iSandbox.create(this, moduleId));
+                mod.instance = mod.create(iSandbox.create(this, moduleId), connection);
                 mod.instance.init();
             }
         },
