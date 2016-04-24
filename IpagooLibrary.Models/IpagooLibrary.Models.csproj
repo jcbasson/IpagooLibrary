@@ -47,6 +47,7 @@
     <Compile Include="DTO\LibraryBooksRequest.cs" />
     <Compile Include="DTO\LibraryDTO.cs" />
     <Compile Include="DTO\RequestHeader.cs" />
+    <Compile Include="DTO\ReturnBook.cs" />
     <Compile Include="ErrorHandling\ConfigurationErrorsException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

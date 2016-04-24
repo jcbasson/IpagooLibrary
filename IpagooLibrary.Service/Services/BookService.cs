@@ -61,6 +61,20 @@ namespace IpagooLibrary.Service.Services
                 //Allowing the exception be rethrown so that LOG4NET can log there is a problem on the api end point
                 throw ex;
             }
-        }  
+        }
+
+        public void ReturnBook(ReturnBook returnBook)
+        {
+            try
+            {
+                _bookRepository.ReturnBook(returnBook);
+            }
+            catch (Exception ex)
+            {
+                //TODO: Log this the exception information along with the method details to the database for Error tracing
+                //Allowing the exception be rethrown so that LOG4NET can log there is a problem on the api end point
+                throw ex;
+            }
+        }
     }
 }

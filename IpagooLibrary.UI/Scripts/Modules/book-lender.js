@@ -23,12 +23,12 @@
                 sandbox.addEvent(txtFriendName, "keyup", thisModule.validateFriendsName);
                 sandbox.addEvent(txtBorrowedDate, "keyup", thisModule.validateBorrowDate);
 
-               
+
                 hubProxy = connection.createHubProxy('LibraryHub');
 
                 hubProxy.on('BookLenderCreateResult', function (data) {
-
-                    alert(data);
+                    
+                    thisModule.processBookLenderCreateResult(data);
 
                 });
 
@@ -60,12 +60,11 @@
                 sandbox.removeClass(txtBorrowedDate, "alert-danger");
             },
             submitBookLender: function () {
-               
-                debugger;
+
                 if (selectedBookISBN
                     && thisModule.validateInput(txtFriendName)
                     && thisModule.validateInput(txtBorrowedDate)) {
-                    
+
                     var bookLender = {
                         FriendName: txtFriendName.value,
                         BookISBN: selectedBookISBN,
@@ -73,18 +72,21 @@
                         Comments: txtComments.value,
                     };
 
-                    var stuff = {
-                        Name: "Jimmy",
-                        Comment: "Testing very hard.."
-                    }
-                    hubProxy.invoke('CreateBookLender', bookLender);               
+                    hubProxy.invoke('CreateBookLender', bookLender).fail(function (e) {
+
+                        sandbox.hideModal(bookLenderFormModal);
+                        sandbox.notify({
+                            type: "alert-danger",
+                            data: "Unable to access the server."
+                        });
+                    });;
                 }
             },
-            validateFriendsName: function(){
+            validateFriendsName: function () {
                 thisModule.validateInput(txtFriendName);
-                   
+
             },
-            validateBorrowDate: function(){
+            validateBorrowDate: function () {
                 thisModule.validateInput(txtBorrowedDate);
             },
             validateInput: function (inputControl) {
@@ -96,7 +98,24 @@
                     return true;
                 }
             },
+            processBookLenderCreateResult: function (result) {
 
+                if (result && result.Status === "Validation Error") {
+                    thisModule.validateFriendsName();
+                    thisModule.validateBorrowDate();
+                }
+                else if(result.Status === "Success"){
+
+                    var bookISBN = result.BookISBN;
+
+                    sandbox.hideModal(bookLenderFormModal);
+
+                    sandbox.notify({
+                        type: "alert-info",
+                        data: "Book with ISBN number " + bookISBN + " was checked out."
+                    });
+                }
+            }
         }
     }
     return bookLenderModule;

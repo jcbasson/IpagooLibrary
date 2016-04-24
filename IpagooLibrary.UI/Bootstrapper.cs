@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.SignalR;
 using AutoMapper;
 using Creator.DirectBooking.Api.Service.Utility;
 using Creator.DirectBooking.Api.Service.Utility.Interfaces;
@@ -9,6 +10,8 @@ using IpagooLibrary.Repository.Infrastructure.Interfaces;
 using IpagooLibrary.Repository.Respositories;
 using IpagooLibrary.Service.Services;
 using IpagooLibrary.UI.App_Start;
+using IpagooLibrary.UI.Hubs;
+using Microsoft.AspNet.SignalR;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -44,13 +47,18 @@ namespace IpagooLibrary.UI
              .Assembly).Where(t => t.Name.EndsWith("Service"))
              .AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            // Register your SignalR hubs.
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
+
             MappingProfile mappingProfile = new MappingProfile();
             var mapper = mappingProfile.GenerateMapper();
             builder.RegisterInstance(mapper).As<IMapper>();
 
             var container = builder.Build();
 
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            DependencyResolver.SetResolver(new Autofac.Integration.Mvc.AutofacDependencyResolver(container));
+
+            GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
         }
     }
 }

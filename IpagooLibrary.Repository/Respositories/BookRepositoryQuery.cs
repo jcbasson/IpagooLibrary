@@ -29,16 +29,6 @@ namespace IpagooLibrary.Repository.Respositories
                 parameter.Value = bookFilter.AuthorName == null ? string.Empty : bookFilter.AuthorName;
                 command.Parameters.Add(parameter);
 
-                //parameter = command.CreateParameter();
-                //parameter.ParameterName = "@Limit";
-                //parameter.Value = bookFilter.Limit;
-                //command.Parameters.Add(parameter);
-
-                //parameter = command.CreateParameter();
-                //parameter.ParameterName = "@Offset";
-                //parameter.Value = bookFilter.Offset;
-                //command.Parameters.Add(parameter);
-
                 return command;
             }
             catch(Exception ex)
@@ -49,7 +39,7 @@ namespace IpagooLibrary.Repository.Respositories
             }     
         }
 
-        public void AddBook(BookDTO book, IDbCommand command)
+        public IDbCommand AddBook(BookDTO book, IDbCommand command)
         {
             command.Parameters.Clear();
 
@@ -61,8 +51,6 @@ namespace IpagooLibrary.Repository.Respositories
                                        ,@Author";
 
             var parameter = command.CreateParameter();
-
-            parameter = command.CreateParameter();
             parameter.ParameterName = "@ISBN"; 
             parameter.DbType = DbType.String;
             parameter.Value = book.ISBN;
@@ -87,20 +75,21 @@ namespace IpagooLibrary.Repository.Respositories
             command.Parameters.Add(parameter);
 
             command.ExecuteNonQuery();
+
+            return command;
         }
 
         public void CreateBookLender(BookLender bookLender, IDbCommand command)
         {
             //This proc will go find the book id by the isbn number and then use that when creating a new lender
             command.CommandText = @"exec [dbo].[CreateBookLender]
-                                        @Name
+                                        @LenderName
                                        ,@BookISBN
+                                       ,@DateLent
                                        ,@Comment";
 
             var parameter = command.CreateParameter();
-                      
-            parameter = command.CreateParameter();
-            parameter.ParameterName = "@Name";
+            parameter.ParameterName = "@LenderName";
             parameter.DbType = DbType.String;
             parameter.Value = bookLender.FriendName;
             command.Parameters.Add(parameter);
@@ -112,6 +101,12 @@ namespace IpagooLibrary.Repository.Respositories
             command.Parameters.Add(parameter);
 
             parameter = command.CreateParameter();
+            parameter.ParameterName = "@DateLent";
+            parameter.DbType = DbType.Date;
+            parameter.Value = bookLender.BorrowedDateTime;
+            command.Parameters.Add(parameter);
+
+            parameter = command.CreateParameter();
             parameter.ParameterName = "@Comment";
             parameter.DbType = DbType.String;
             parameter.Value = bookLender.Comments;
@@ -120,10 +115,25 @@ namespace IpagooLibrary.Repository.Respositories
             command.ExecuteNonQuery();
         }
 
-
-        public void Delete(int id)
+        public void ReturnBook(ReturnBook returnBook, IDbCommand command)
         {
-            throw new System.Exception("Not implemented");
+            command.CommandText = @"exec [dbo].[ReturnBook]
+                                        @BookISBN
+                                       ,@LenderID";
+
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@BookISBN";
+            parameter.DbType = DbType.String;
+            parameter.Value = returnBook.ISBN;
+            command.Parameters.Add(parameter);
+
+            parameter = command.CreateParameter();
+            parameter.ParameterName = "@LenderID";
+            parameter.DbType = DbType.Int32;
+            parameter.Value = returnBook.LenderID;
+            command.Parameters.Add(parameter);
+
+            command.ExecuteNonQuery();
         }
     }
 }

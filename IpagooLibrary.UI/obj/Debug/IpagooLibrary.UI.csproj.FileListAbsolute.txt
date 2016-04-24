@@ -83,3 +83,5 @@ C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.C
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.Integration.SignalR.dll
+C:\Projects\Ipagoo\IpagooLibrary\IpagooLibrary.UI\bin\Autofac.Integration.SignalR.xml

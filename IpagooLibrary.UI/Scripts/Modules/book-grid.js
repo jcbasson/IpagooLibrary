@@ -1,7 +1,7 @@
 ﻿define(["Config/book-RequestConfig", "Store/books-store"],
 function (iRequestConfig, iBookStore) {
-    var bookGridModule = function (sandbox) {
-        var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook;
+    var bookGridModule = function (sandbox, connection) {
+        var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook, allbtnReturnBook, hubProxy;
 
         return {
             init: function () {
@@ -9,10 +9,18 @@ function (iRequestConfig, iBookStore) {
 
                 bookGridContainer = sandbox.find("#book-grid-container")[0];
                 bookGridTemplate = sandbox.find("#book-grid-template")[0];
-                
+
                 sandbox.listen({
                     'init-book-grid': thisModule.initializeBookGrid,
                     'empty-book-grid': thisModule.emptyBookGrid
+                });
+
+                hubProxy = connection.createHubProxy('LibraryHub');
+
+                hubProxy.on('BookReturnedResult', function (data) {
+
+                    thisModule.processBookReturnedResult(data);
+
                 });
             },
             destroy: function () {
@@ -20,7 +28,7 @@ function (iRequestConfig, iBookStore) {
 
             },
             initializeBookGrid: function () {
-              
+
                 var bookGetUrl = iRequestConfig.getBookGetEndpoint();
 
                 var bookRequest = sandbox.httpGet(bookGetUrl);
@@ -45,12 +53,12 @@ function (iRequestConfig, iBookStore) {
                     }
 
                 }).fail(function (jqXHr, textStatus, errorThrown) {
-                    
+
                     sandbox.notify({
                         type: "alert-danger",
                         data: "Unable to access the server."
                     });
-                   
+
                 });
             },
             emptyBookGrid: function () {
@@ -68,6 +76,7 @@ function (iRequestConfig, iBookStore) {
                     var generatedHtml = template(jsonBooks);
                     sandbox.replaceContent(bookGridContainer, generatedHtml);
                     thisModule.initializeBorrowClickEvents();
+                    thisModule.initializeReturnClickEvents();
 
                 } else {
                     sandbox.replaceContent(bookGridContainer, "<p>No books were found</p>");
@@ -85,7 +94,7 @@ function (iRequestConfig, iBookStore) {
                         if (btnBorrowBook) {
                             sandbox.addEvent(btnBorrowBook, "click", thisModule.initializeBorrowBookForm);
                         }
-                        
+
                     }
                 }
             },
@@ -95,19 +104,48 @@ function (iRequestConfig, iBookStore) {
                     var count = 0;
                     for (; count < allbtnBorrowBook.length; count++) {
 
-                        var btnEditPerson = allbtnBorrowBook[count];
+                        var btnBorrowBook = allbtnBorrowBook[count];
                         sandbox.removeEvent(btnBorrowBook, "click", thisModule.initializeBorrowBookForm);
+                    }
+                }
+            },
+            initializeReturnClickEvents: function () {
+
+                connection.start().done(function () {
+
+                    var btnReturnBook;
+                    allbtnReturnBook = sandbox.find(".btnReturnBook");
+                    var count = 0;
+
+                    if (allbtnReturnBook && allbtnReturnBook.length > 0) {
+                        for (; count < allbtnReturnBook.length; count++) {
+
+                            btnReturnBook = allbtnReturnBook[count];
+                            if (btnReturnBook) {
+                                sandbox.addEvent(btnReturnBook, "click", thisModule.returnBook);
+                            }
+
+                        }
+                    }
+                });
+            },
+            destroyReturnClickEvents: function () {
+
+                if (allbtnReturnBook && allbtnReturnBook.length > 0) {
+                    var count = 0;
+                    for (; count < allbtnReturnBook.length; count++) {
+
+                        var btnReturnBook = allbtnReturnBook[count];
+                        sandbox.removeEvent(btnReturnBook, "click", thisModule.returnBook);
                     }
                 }
             },
             initializeBorrowBookForm: function (e) {
 
-                var count = 0;
-                var clickedBorrowButton = e.currentTarget;
+                var clickedBorrowBookButton = e.currentTarget;
 
-
-                var isbn = sandbox.getAttr(clickedBorrowButton, "data-isbn");
-                var lenderId = sandbox.getAttr(clickedBorrowButton, "data-lenderId");
+                var isbn = sandbox.getAttr(clickedBorrowBookButton, "data-isbn");
+                var lenderId = sandbox.getAttr(clickedBorrowBookButton, "data-lenderId");
 
                 sandbox.notify({
                     type: "init-lendbook-form",
@@ -115,7 +153,36 @@ function (iRequestConfig, iBookStore) {
                         ISBN: isbn,
                         LenderID: lenderId
                     }
-                });  
+                });
+            },
+            returnBook: function (e) {
+
+                var clickedReturnBookButton = e.currentTarget;
+
+                var isbn = sandbox.getAttr(clickedReturnBookButton, "data-isbn");
+                var lenderId = sandbox.getAttr(clickedReturnBookButton, "data-lenderId");
+
+                var returnedBook = {
+                    ISBN: isbn,
+                    LenderID: lenderId
+                }
+                hubProxy.invoke('ReturnBook', returnedBook).fail(function (e) {
+                                       
+                    sandbox.notify({
+                        type: "alert-danger",
+                        data: "Unable to access the server."
+                    });
+                });;
+
+            },
+            processBookReturnedResult: function (result) {
+
+                var bookISBN = result.BookISBN;
+
+                sandbox.notify({
+                    type: "alert-success",
+                    data: "Book with ISBN number " + bookISBN + " has just become available."
+                });
             }
         }
     }

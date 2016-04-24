@@ -20,6 +20,11 @@ function (iRequestConfig) {
                 sandbox.addEvent(btnSearchBooks, "click", thisModule.findByBook);
                 sandbox.addEvent(btnClearSearchBooks, "click", thisModule.clearSearchFilters);
 
+                debugger;
+                sandbox.addEvent(txtSearchByISBN, "keyup", thisModule.clearValidationNotices);
+                sandbox.addEvent(txtSearchByTitle, "keyup", thisModule.clearValidationNotices);
+                sandbox.addEvent(txtSearchByAuthor, "keyup", thisModule.clearValidationNotices);
+                sandbox.addEvent(ddlSearchByGenre, "change", thisModule.clearValidationNotices);
             },
             destroy: function () {
                 sandbox.removeEvent(btnSearchByName, "click", thisModule.findByBook);
@@ -83,6 +88,7 @@ function (iRequestConfig) {
                 });
             },
             clearValidationNotices: function () {
+              
                 sandbox.removeClass(txtSearchByISBN, "alert-danger");
                 sandbox.removeClass(txtSearchByTitle, "alert-danger");
                 sandbox.removeClass(txtSearchByAuthor, "alert-danger");

@@ -6,7 +6,8 @@ namespace IpagooLibrary.Repository.Respositories.Interfaces
     public interface IBookRepository 
     {
         LibraryDTO FilterBooks(BookFilter bookFilter);
-        void AddBooks(List<BookDTO> books);
+        List<BookDTO> AddBooks(List<BookDTO> books);
         void CreateBookLender(BookLender bookLender);
+        void ReturnBook(ReturnBook returnBook);
     }
 }

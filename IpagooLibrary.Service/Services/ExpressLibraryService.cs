@@ -91,7 +91,14 @@ namespace IpagooLibrary.Service.Services
                 {
                     try
                     {
-                        bookRepository.AddBooks(libraryDto.Books);
+                        var newLibraryDto = new LibraryDTO();
+
+                        var ourbooks = bookRepository.AddBooks(libraryDto.Books);
+
+                        newLibraryDto.Books = ourbooks;
+                        newLibraryDto.TotalBooks = ourbooks.Count;
+
+                        return newLibraryDto;
                     }
                     catch (Exception ex)
                     {

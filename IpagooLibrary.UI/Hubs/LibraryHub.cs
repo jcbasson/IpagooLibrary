@@ -1,27 +1,71 @@
 ﻿using IpagooLibrary.Models.DTO;
+using IpagooLibrary.Service.Interfaces;
+using IpagooLibrary.UI.Models;
 using Microsoft.AspNet.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace IpagooLibrary.UI.Hubs
 {
     public class LibraryHub : Hub
     {
+        private readonly IBookService _iBookService;
+
+        public LibraryHub(IBookService iBookService)
+        {
+            _iBookService = iBookService;
+        }
+
         //Broacasts to all clients
         public void CreateBookLender(BookLender bookLender)
         {
-            if(bookLender != null 
-                && !string.IsNullOrWhiteSpace(bookLender.BookISBN) 
-                && !string.IsNullOrWhiteSpace(bookLender.FriendName)
-                && !string.IsNullOrWhiteSpace(bookLender.BorrowDate))
+            try
             {
-                Clients.Caller.BookLenderCreateResult("One or more fields were invalid...");
+                BookBorrowResult bookBorrowResult = new BookBorrowResult();
+
+                if (bookLender == null
+                    || string.IsNullOrWhiteSpace(bookLender.BookISBN)
+                    || string.IsNullOrWhiteSpace(bookLender.FriendName)
+                    || string.IsNullOrWhiteSpace(bookLender.BorrowDate))
+                {
+                    bookBorrowResult.Status = "Validation Error";
+                }
+                else
+                {
+                    _iBookService.CreateBookLender(bookLender);
+                    bookBorrowResult.Status = "Success";
+                    bookBorrowResult.BookISBN = bookLender.BookISBN;
+                }
+
+                Clients.All.BookLenderCreateResult(bookBorrowResult);
             }
-            else
+            catch (Exception ex)
             {
-                Clients.All.BookLenderCreateResult("Book was successfully checked out");
+                //Log this error ex
+
+                //This is done to allow the exception to flow to client for error notification
+                throw new HubException();
+            }
+        }
+
+        public void ReturnBook(ReturnBook returnBook)
+        {
+            try
+            {
+                
+                _iBookService.ReturnBook(returnBook);
+
+                BookBorrowResult bookBorrowResult = new BookBorrowResult();
+                bookBorrowResult.Status = "Success";
+                bookBorrowResult.BookISBN = returnBook.ISBN;
+                
+                Clients.All.BookReturnedResult(bookBorrowResult);
+            }
+            catch (Exception ex)
+            {
+                //Log this error ex
+
+                //This is done to allow the exception to flow to client for error notification
+                throw new HubException();
             }
         }
     }

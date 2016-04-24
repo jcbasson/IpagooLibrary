@@ -6,5 +6,6 @@ namespace IpagooLibrary.Service.Interfaces
     {
         LibraryDTO FilterBooks(BookFilter bookFilter);
         void CreateBookLender(BookLender bookLender);
+        void ReturnBook(ReturnBook returnBook);
     }
 }
