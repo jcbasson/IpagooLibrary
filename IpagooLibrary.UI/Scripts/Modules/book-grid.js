@@ -1,7 +1,7 @@
 ﻿define(["Config/book-RequestConfig", "Store/books-store"],
 function (iRequestConfig, iBookStore) {
-    var bookGridModule = function (sandbox, connection) {
-        var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook, allbtnReturnBook, hubProxy;
+    var bookGridModule = function (sandbox,connection, hubProxy) {
+        var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook, allbtnReturnBook;
 
         return {
             init: function () {
@@ -12,14 +12,13 @@ function (iRequestConfig, iBookStore) {
 
                 sandbox.listen({
                     'init-book-grid': thisModule.initializeBookGrid,
-                    'empty-book-grid': thisModule.emptyBookGrid
+                    'empty-book-grid': thisModule.emptyBookGrid,
+                    'toggle-book-grid-buttons': thisModule.toggleBorrowReturnBookButtons
                 });
 
-                hubProxy = connection.createHubProxy('LibraryHub');
+                hubProxy.on('CheckInBookResult', function (data) {
 
-                hubProxy.on('BookReturnedResult', function (data) {
-
-                    thisModule.processBookReturnedResult(data);
+                    thisModule.processCheckInBookResult(data);
 
                 });
             },
@@ -34,7 +33,7 @@ function (iRequestConfig, iBookStore) {
                 var bookRequest = sandbox.httpGet(bookGetUrl);
 
                 bookRequest.done(function (response) {
-                    console.log(response);
+
                     if (response) {
 
                         iBookStore.setCurrentBook(response.Books);
@@ -46,7 +45,9 @@ function (iRequestConfig, iBookStore) {
                             data: response.Pager
                         });
                     } else {
+
                         sandbox.replaceContent(bookGridContainer, "<p>No books were found</p>");
+
                         sandbox.notify({
                             type: "load-pager",
                         });
@@ -111,23 +112,20 @@ function (iRequestConfig, iBookStore) {
             },
             initializeReturnClickEvents: function () {
 
-                connection.start().done(function () {
+                var btnReturnBook;
+                allbtnReturnBook = sandbox.find(".btnReturnBook");
+                var count = 0;
 
-                    var btnReturnBook;
-                    allbtnReturnBook = sandbox.find(".btnReturnBook");
-                    var count = 0;
+                if (allbtnReturnBook && allbtnReturnBook.length > 0) {
+                    for (; count < allbtnReturnBook.length; count++) {
 
-                    if (allbtnReturnBook && allbtnReturnBook.length > 0) {
-                        for (; count < allbtnReturnBook.length; count++) {
-
-                            btnReturnBook = allbtnReturnBook[count];
-                            if (btnReturnBook) {
-                                sandbox.addEvent(btnReturnBook, "click", thisModule.returnBook);
-                            }
-
+                        btnReturnBook = allbtnReturnBook[count];
+                        if (btnReturnBook) {
+                            sandbox.addEvent(btnReturnBook, "click", thisModule.returnBook);
                         }
+
                     }
-                });
+                }
             },
             destroyReturnClickEvents: function () {
 
@@ -166,8 +164,8 @@ function (iRequestConfig, iBookStore) {
                     ISBN: isbn,
                     LenderID: lenderId
                 }
-                hubProxy.invoke('ReturnBook', returnedBook).fail(function (e) {
-                                       
+                hubProxy.invoke('CheckInBook', returnedBook).fail(function (e) {
+
                     sandbox.notify({
                         type: "alert-danger",
                         data: "Unable to access the server."
@@ -175,14 +173,39 @@ function (iRequestConfig, iBookStore) {
                 });;
 
             },
-            processBookReturnedResult: function (result) {
+            processCheckInBookResult: function (result) {
 
                 var bookISBN = result.BookISBN;
+
+                var toggleButtonsParam = {
+                    BookISBN: bookISBN,
+                    displayBorrowButton: true,
+                    displayReturnButton: false,
+                }
+                thisModule.toggleBorrowReturnBookButtons(toggleButtonsParam);
 
                 sandbox.notify({
                     type: "alert-success",
                     data: "Book with ISBN number " + bookISBN + " has just become available."
                 });
+            },
+            toggleBorrowReturnBookButtons: function (options) {
+                debugger;
+                var btnBorrowBook = sandbox.find("#btnBorrowBook-" + options.BookISBN)[0];
+                var btnReturnBook = sandbox.find("#btnReturnBook-" + options.BookISBN)[0];
+
+                if (btnBorrowBook) {
+
+                    sandbox.removeClass(btnBorrowBook, "invisible-false");
+                    sandbox.removeClass(btnBorrowBook, "invisible-true");
+                    sandbox.addClass(btnBorrowBook, "invisible-" + !options.displayBorrowButton);
+                }
+
+                if (btnReturnBook) {
+                    sandbox.removeClass(btnReturnBook, "visible-false");
+                    sandbox.removeClass(btnReturnBook, "visible-true");
+                    sandbox.addClass(btnReturnBook, "visible-" + options.displayReturnButton);
+                }
             }
         }
     }

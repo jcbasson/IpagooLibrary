@@ -1,33 +1,51 @@
 ﻿define(["jquery", "handlebarsBase", "Core/core-config", "Service/ajax-service", "Service/error-service", "Sandbox/sandbox", "bootstrap", "bootstrap-datepicker", "signalR"],
 function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandbox) {
 
-    var moduleData = {}, appConfig = {}, filterUtitlity = {}, thatCore;
+    var moduleData = {}, appConfig = {}, filterUtitlity = {};
 
     return {
         start_all: function () {
 
+
             if (iJquery && iHandlebars && iCoreConfig && iAjaxService && iSandbox) {
 
-                connection = iJquery.hubConnection();
+                var connection = iJquery.hubConnection();
 
-                appConfig = iCoreConfig();
-               
-                thatCore = this;
-                for (var moduleId in moduleData) {
-                    if (moduleData.hasOwnProperty(moduleId)) {
-                        this.start(moduleId);
+                if (connection) {
+
+                    var hubProxy = connection.createHubProxy('LibraryHub');
+
+                    if (hubProxy) {
+
+                        appConfig = iCoreConfig();
+
+                        var thisCore = this;
+
+                        for (var moduleId in moduleData) {
+
+                            if (moduleData.hasOwnProperty(moduleId)) {
+
+                                thisCore.start(moduleId, connection, hubProxy);
+                            }
+                        }
                     }
+                    else {
+                        throw "Unable to generate library hub proxies";
+                    }
+                }
+                else {
+                    throw "Unable to make a connection to library hub";
                 }
 
             } else {
                 throw "One or more Base Libraries are missing";
             }
         },
-        start: function (moduleId) {
+        start: function (moduleId,connection, hubProxy) {
 
             var mod = moduleData[moduleId];
             if (mod) {
-                mod.instance = mod.create(iSandbox.create(this, moduleId), connection);
+                mod.instance = mod.create(iSandbox.create(this, moduleId), connection, hubProxy);
                 mod.instance.init();
             }
         },
@@ -171,7 +189,7 @@ function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandb
             get_attr: function (el, attribute) {
                 return iJquery(el).attr(attribute);
             },
-            remove_attr: function(el,attribute){
+            remove_attr: function (el, attribute) {
                 iJquery(el).removeAttr(attribute);
             },
             addCss: function (el, css) {

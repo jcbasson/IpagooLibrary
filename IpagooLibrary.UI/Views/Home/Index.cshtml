@@ -67,8 +67,8 @@
             <td data-for="Author" data-val="{{AuthorName}}">{{AuthorName}}</td>
             <td data-for="Genre" data-val="{{Genre}}">{{Genre}}</td>
             <td>
-                <input type="button" class="btnBorrowBook btn btn-primary invisible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="BORROW" />
-                <input type="button" class="btnReturnBook btn btn-info visible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="RETURN" />
+                <input id="btnBorrowBook-{{ISBN}}" type="button" class="btnBorrowBook btn btn-primary invisible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="BORROW" />
+                <input id="btnReturnBook-{{ISBN}}" type="button" class="btnReturnBook btn btn-info visible-{{IsOut}}" data-lenderId="{{LenderID}}" data-isbn="{{ISBN}}" value="RETURN" />
             </td>
         </tr>
         {{/each}}

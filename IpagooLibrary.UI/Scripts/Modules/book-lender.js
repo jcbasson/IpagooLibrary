@@ -1,6 +1,6 @@
 ﻿define(function () {
-    var bookLenderModule = function (sandbox, connection) {
-        var thisModule, selectedBookISBN, bookLenderFormModal, txtFriendName, txtBorrowedDate, txtComments, lblISBN, btnSubmitLender, hubProxy;
+    var bookLenderModule = function (sandbox, connection, hubProxy) {
+        var thisModule, selectedBookISBN, bookLenderFormModal, txtFriendName, txtBorrowedDate, txtComments, lblISBN, btnSubmitLender;
 
         return {
             init: function () {
@@ -24,16 +24,13 @@
                 sandbox.addEvent(txtBorrowedDate, "keyup", thisModule.validateBorrowDate);
 
 
-                hubProxy = connection.createHubProxy('LibraryHub');
+                hubProxy.on('CheckOutBookResult', function (data) {
 
-                hubProxy.on('BookLenderCreateResult', function (data) {
-                    
-                    thisModule.processBookLenderCreateResult(data);
+                    thisModule.processCheckOutBookResult(data);
 
                 });
 
                 connection.start().done(function () {
-
                     sandbox.addEvent(btnSubmitLender, "click", thisModule.submitBookLender);
                 });
             },
@@ -72,7 +69,7 @@
                         Comments: txtComments.value,
                     };
 
-                    hubProxy.invoke('CreateBookLender', bookLender).fail(function (e) {
+                    hubProxy.invoke('CheckOutBook', bookLender).fail(function (e) {
 
                         sandbox.hideModal(bookLenderFormModal);
                         sandbox.notify({
@@ -98,16 +95,25 @@
                     return true;
                 }
             },
-            processBookLenderCreateResult: function (result) {
+            processCheckOutBookResult: function (result) {
 
                 if (result && result.Status === "Validation Error") {
                     thisModule.validateFriendsName();
                     thisModule.validateBorrowDate();
                 }
-                else if(result.Status === "Success"){
+                else if (result.Status === "Success") {
 
                     var bookISBN = result.BookISBN;
 
+                    sandbox.notify({
+                        type: 'toggle-book-grid-buttons',
+                        data: {
+                            BookISBN: bookISBN,
+                            displayBorrowButton: false,
+                            displayReturnButton: true,
+                        }
+                    });
+                   
                     sandbox.hideModal(bookLenderFormModal);
 
                     sandbox.notify({

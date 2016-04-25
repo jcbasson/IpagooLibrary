@@ -22,15 +22,23 @@
             alertSuccess: function (message) {
                 
                 sandbox.showModal(successModal, message);
+
+                setTimeout(function () { sandbox.hideModal(successModal); }, 2000);
             },
             alertInfo: function (message) {
                 sandbox.showModal(infoModal, message);
+
+                setTimeout(function () { sandbox.hideModal(infoModal); }, 2000);
             },
             alertWarning: function (message) {
                 sandbox.showModal(warningModal, message);
+
+                setTimeout(function () { sandbox.hideModal(warningModal); }, 2000);
             },
             alertDanger: function (message) {
                 sandbox.showModal(dangerModal, message);
+
+                setTimeout(function () { sandbox.hideModal(dangerModal); }, 2000);
             }
         }
     }

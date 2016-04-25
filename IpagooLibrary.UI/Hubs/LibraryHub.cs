@@ -16,7 +16,7 @@ namespace IpagooLibrary.UI.Hubs
         }
 
         //Broacasts to all clients
-        public void CreateBookLender(BookLender bookLender)
+        public void CheckOutBook(BookLender bookLender)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace IpagooLibrary.UI.Hubs
                     bookBorrowResult.BookISBN = bookLender.BookISBN;
                 }
 
-                Clients.All.BookLenderCreateResult(bookBorrowResult);
+                Clients.All.CheckOutBookResult(bookBorrowResult);
             }
             catch (Exception ex)
             {
@@ -47,18 +47,17 @@ namespace IpagooLibrary.UI.Hubs
             }
         }
 
-        public void ReturnBook(ReturnBook returnBook)
+        public void CheckInBook(ReturnBook returnBook)
         {
             try
-            {
-                
+            {        
                 _iBookService.ReturnBook(returnBook);
 
                 BookBorrowResult bookBorrowResult = new BookBorrowResult();
                 bookBorrowResult.Status = "Success";
                 bookBorrowResult.BookISBN = returnBook.ISBN;
                 
-                Clients.All.BookReturnedResult(bookBorrowResult);
+                Clients.All.CheckInBookResult(bookBorrowResult);
             }
             catch (Exception ex)
             {
