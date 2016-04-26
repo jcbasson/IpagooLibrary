@@ -1,5 +1,5 @@
 ﻿define(function () {
-    var bookLenderModule = function (sandbox, connection, hubProxy) {
+    var bookLenderModule = function (sandbox, signalROjbect) {
         var thisModule, selectedBookISBN, bookLenderFormModal, txtFriendName, txtBorrowedDate, txtComments, lblISBN, btnSubmitLender;
 
         return {
@@ -24,13 +24,13 @@
                 sandbox.addEvent(txtBorrowedDate, "keyup", thisModule.validateBorrowDate);
 
 
-                hubProxy.on('CheckOutBookResult', function (data) {
+                signalROjbect.hubProxy.on('CheckOutBookResult', function (data) {
 
                     thisModule.processCheckOutBookResult(data);
 
                 });
 
-                connection.start().done(function () {
+                signalROjbect.connection.start().done(function () {
                     sandbox.addEvent(btnSubmitLender, "click", thisModule.submitBookLender);
                 });
             },
@@ -57,7 +57,7 @@
                 sandbox.removeClass(txtBorrowedDate, "alert-danger");
             },
             submitBookLender: function () {
-
+                
                 if (selectedBookISBN
                     && thisModule.validateInput(txtFriendName)
                     && thisModule.validateInput(txtBorrowedDate)) {
@@ -69,7 +69,7 @@
                         Comments: txtComments.value,
                     };
 
-                    hubProxy.invoke('CheckOutBook', bookLender).fail(function (e) {
+                    signalROjbect.hubProxy.invoke('CheckOutBook', bookLender).fail(function (e) {
 
                         sandbox.hideModal(bookLenderFormModal);
                         sandbox.notify({

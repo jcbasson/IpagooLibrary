@@ -2,7 +2,7 @@
 function (iJquery) { 
     return {
         HttpGet: function (url) {
-            debugger;
+            
             return iJquery.get(url);
         },
         HttpPost: function (url, data) {

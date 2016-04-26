@@ -1,7 +1,7 @@
 ﻿define(["jquery", "handlebarsBase", "Core/core-config", "Service/ajax-service", "Service/error-service", "Sandbox/sandbox", "bootstrap", "bootstrap-datepicker", "signalR"],
 function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandbox) {
 
-    var moduleData = {}, appConfig = {}, filterUtitlity = {};
+    var moduleData = {}, appConfig = {}, filterUtitlity = {}, signalROjbect = { connection: '', hubProxy : ''};
 
     return {
         start_all: function () {
@@ -9,23 +9,23 @@ function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandb
 
             if (iJquery && iHandlebars && iCoreConfig && iAjaxService && iSandbox) {
 
-                var connection = iJquery.hubConnection();
+                signalROjbect.connection = iJquery.hubConnection();
 
-                if (connection) {
+                if (signalROjbect.connection) {
 
-                    var hubProxy = connection.createHubProxy('LibraryHub');
+                    signalROjbect.hubProxy = signalROjbect.connection.createHubProxy('LibraryHub');
 
-                    if (hubProxy) {
+                    if (signalROjbect.hubProxy) {
 
                         appConfig = iCoreConfig();
-
+                                                
                         var thisCore = this;
 
                         for (var moduleId in moduleData) {
 
                             if (moduleData.hasOwnProperty(moduleId)) {
 
-                                thisCore.start(moduleId, connection, hubProxy);
+                                thisCore.start(moduleId);
                             }
                         }
                     }
@@ -41,11 +41,11 @@ function (iJquery, iHandlebars, iCoreConfig, iAjaxService, iErrorService, iSandb
                 throw "One or more Base Libraries are missing";
             }
         },
-        start: function (moduleId,connection, hubProxy) {
+        start: function (moduleId) {
 
             var mod = moduleData[moduleId];
             if (mod) {
-                mod.instance = mod.create(iSandbox.create(this, moduleId), connection, hubProxy);
+                mod.instance = mod.create(iSandbox.create(this, moduleId), signalROjbect);
                 mod.instance.init();
             }
         },

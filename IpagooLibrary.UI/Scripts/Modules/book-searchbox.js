@@ -20,7 +20,7 @@ function (iRequestConfig) {
                 sandbox.addEvent(btnSearchBooks, "click", thisModule.findByBook);
                 sandbox.addEvent(btnClearSearchBooks, "click", thisModule.clearSearchFilters);
 
-                debugger;
+                
                 sandbox.addEvent(txtSearchByISBN, "keyup", thisModule.clearValidationNotices);
                 sandbox.addEvent(txtSearchByTitle, "keyup", thisModule.clearValidationNotices);
                 sandbox.addEvent(txtSearchByAuthor, "keyup", thisModule.clearValidationNotices);

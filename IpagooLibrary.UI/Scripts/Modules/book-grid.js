@@ -1,6 +1,6 @@
 ﻿define(["Config/book-RequestConfig", "Store/books-store"],
 function (iRequestConfig, iBookStore) {
-    var bookGridModule = function (sandbox,connection, hubProxy) {
+    var bookGridModule = function (sandbox, signalROjbect) {
         var thisModule, filterUtility, bookGridContainer, bookGridTemplate, allbtnBorrowBook, allbtnReturnBook;
 
         return {
@@ -16,7 +16,7 @@ function (iRequestConfig, iBookStore) {
                     'toggle-book-grid-buttons': thisModule.toggleBorrowReturnBookButtons
                 });
 
-                hubProxy.on('CheckInBookResult', function (data) {
+                signalROjbect.hubProxy.on('CheckInBookResult', function (data) {
 
                     thisModule.processCheckInBookResult(data);
 
@@ -164,7 +164,8 @@ function (iRequestConfig, iBookStore) {
                     ISBN: isbn,
                     LenderID: lenderId
                 }
-                hubProxy.invoke('CheckInBook', returnedBook).fail(function (e) {
+
+                signalROjbect.hubProxy.invoke('CheckInBook', returnedBook).fail(function (e) {
 
                     sandbox.notify({
                         type: "alert-danger",
@@ -190,7 +191,7 @@ function (iRequestConfig, iBookStore) {
                 });
             },
             toggleBorrowReturnBookButtons: function (options) {
-                debugger;
+                
                 var btnBorrowBook = sandbox.find("#btnBorrowBook-" + options.BookISBN)[0];
                 var btnReturnBook = sandbox.find("#btnReturnBook-" + options.BookISBN)[0];
 

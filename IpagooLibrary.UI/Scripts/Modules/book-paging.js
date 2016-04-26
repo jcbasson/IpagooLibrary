@@ -21,7 +21,7 @@
                 sandbox.replaceContent(pagingContainer, "");
             },
             initializePager: function (data) {
-                debugger;
+                
                 if (data) {
                     //Check whether the paginator needs loading, as we might not be on the next batch of paging options
                     if (loadPager === "true") {
@@ -61,7 +61,7 @@
                 }
             },
             CalculateNumberOfPageButtonsToRight: function (currentPageIndex, numberOfPagerButtonDisplayed, totalPages) {
-                debugger;
+                
                 var count = 1;
                 //Max number of paging buttons to add to the right of the current selected pager button is always 1 less than the full amount the pager can contain
                 var maxPagingButtonOneCanAdd = numberOfPagerButtonDisplayed - 1;
@@ -80,7 +80,7 @@
                 return maxPagingButtonOneCanAdd;
             },
             loadNextPageNumbersIntoArray: function (currentPageIndex, peopleOffset, pageButtonOptionsToRight, peopleDisplayedPerPage, totalPages) {
-                debugger;
+                
                 var count = 1;
                 var numberToPush = 0;
                 var pageNumbers = [];
@@ -126,7 +126,7 @@
                 }
             },
             PagePeople: function (e) {
-                debugger;
+                
                 var currentClickedPageLink = e.currentTarget;
                 var pageOffset = sandbox.getAttr(currentClickedPageLink, "data-offset");
                 loadPager = sandbox.getAttr(currentClickedPageLink, "data-reloadpager");
