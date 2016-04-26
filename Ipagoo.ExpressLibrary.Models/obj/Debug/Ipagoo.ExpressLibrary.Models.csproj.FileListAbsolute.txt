@@ -7,4 +7,3 @@ C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Models\bin\Debug\EntityFr
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Models\bin\Debug\EntityFramework.SqlServer.xml
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Models\obj\Debug\Ipagoo.ExpressLibrary.Models.dll
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Models\obj\Debug\Ipagoo.ExpressLibrary.Models.pdb
-C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Models\obj\Debug\Ipagoo.ExpressLibrary.Models.csprojResolveAssemblyReference.cache

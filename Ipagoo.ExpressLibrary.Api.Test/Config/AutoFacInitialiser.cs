@@ -17,17 +17,18 @@ namespace Ipagoo.ExpressLibrary.Api.Test.Config
 
             builder.RegisterType<AmIHereController>().As(typeof(AmIHereController)).SingleInstance();
             builder.RegisterType<BooksController>().As(typeof(BooksController)).SingleInstance();
-          
+           
             builder.RegisterAssemblyTypes(typeof(BookService)
-                .Assembly).Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces().SingleInstance();
+         .Assembly).Where(t => t.Name.EndsWith("Service"))
+         .AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+
+            builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().WithParameter("dbConnectionConfig", AppConfig.ConnectionString).InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(typeof(BookRepository)
                 .Assembly).Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces().SingleInstance();
-
-            builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().WithParameter("nameOrConnectionString", AppConfig.ConnectionString).SingleInstance();
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
+                .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             return builder.Build();
         }

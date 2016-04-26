@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net;
 using Ipagoo.ExpressLibrary.Api.Controllers;
 using Ipagoo.ExpressLibrary.Models.DTO;
+using System.Threading.Tasks;
 
 namespace Ipagoo.ExpressLibrary.Api.Test
 {
@@ -24,7 +25,7 @@ namespace Ipagoo.ExpressLibrary.Api.Test
         //When a GET request 
         //Then an object with a list of people and a pager object should be returned with a 200 Status Code Response
         [TestCase()]
-        public async void GetBooksTest()
+        public async Task GetBookByISBNTest()
         {
             using (var lifetime = _container.BeginLifetimeScope())
             {
@@ -32,7 +33,7 @@ namespace Ipagoo.ExpressLibrary.Api.Test
                 var controller = APIControllerTestHelper.ResolveController<BooksController>(lifetime);
                 var bookFilter = new BookFilter
                 {
-                    ISBN = "978-3-16-148410-0"
+                    ISBN = "8-888888-8-8"
                 };
 
                 //when

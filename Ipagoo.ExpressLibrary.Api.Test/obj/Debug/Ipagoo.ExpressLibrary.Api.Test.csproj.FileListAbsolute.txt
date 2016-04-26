@@ -47,3 +47,5 @@ C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\bin\Debug\Entity
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\bin\Debug\System.Web.Http.Cors.xml
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\obj\Debug\Ipagoo.ExpressLibrary.Api.Test.dll
 C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\obj\Debug\Ipagoo.ExpressLibrary.Api.Test.pdb
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\Ipagoo\IpagooLibrary\Ipagoo.ExpressLibrary.Api.Test\bin\Debug\EntityFramework.SqlServer.xml
